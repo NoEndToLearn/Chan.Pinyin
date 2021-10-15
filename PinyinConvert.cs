@@ -14,8 +14,8 @@ namespace Chan.Pinyin
         /// <summary>
         /// 汉字转换为拼音
         /// </summary>
-        /// <param name="chinese"></param>
-        /// <param name="options"></param>
+        /// <param name="chinese">需要转为拼音的汉子或句子</param>
+        /// <param name="options">拼音转换配置项</param>
         /// <returns></returns>
         public static string ConvertToPinyin(string chinese, PinyinOptions options = null)
         {
@@ -89,6 +89,28 @@ namespace Chan.Pinyin
             }
             return MergePinyin(result, ploysList, options);
         }
+
+        /// <summary>
+        /// 汉字繁简转换
+        /// </summary>
+        /// <param name="chinese"></param>
+        /// <param name="toComplex"></param>
+        /// <returns></returns>
+        public static string ConvertToComplex(string chinese, bool toComplex = true)
+        {
+            if (string.IsNullOrEmpty(chinese))
+            {
+                return string.Empty;
+            }
+            int len = chinese.Length;
+            StringBuilder transBuilder = new StringBuilder();
+            for (int i = 0; i < len; i++)
+            {
+                var word = chinese[i];
+                transBuilder.Append(toComplex ? GetComplexWord(word) : GetSimpleWord(word));
+            }
+            return transBuilder.ToString();
+        }
         /// <summary>
         /// 将处理好的的汉字拼音合并
         /// </summary>
@@ -103,66 +125,73 @@ namespace Chan.Pinyin
             //定义带有掉的元音字母
             var toneVowels = "āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ";
             StringBuilder pinyinBuilder = new StringBuilder();
+            //循环的上一次是否添加分隔符
             bool isPrevAddSeparator = false;
             for (var i = 0; i < result.Count; i++)
             {
-                var py = result[i];
-                var type = types[i];
-                StringBuilder py1 = new StringBuilder();
-                if (type == PloysyType.Monosyllable || type == PloysyType.Polyphonic)
+                var wordPinyin = result[i];
+                var ploysyType = types[i];
+                StringBuilder wordBuilder = new StringBuilder();
+                //如果是拼音或者多音字
+                if (ploysyType == PloysyType.Monosyllable || ploysyType == PloysyType.Polyphonic)
                 {
-                    //如果是拼音或者多音字
+                    //如需要数字声调或者无声调
                     if (options.PinyinEnum == PinyinEnum.ToneRightNum || options.PinyinEnum == PinyinEnum.None)
                     {
-                        //如需要数字声调或者无声调
                         var tone = -1;//音调数字形式
-                        foreach (var w in py)
+                        foreach (var vowel in wordPinyin)
                         {
                             var k = -1;
                             //寻找在有声调声母中的位置
-                            if ((k = toneVowels.IndexOf(w)) > -1)
+                            if ((k = toneVowels.IndexOf(vowel)) > -1)
                             {
                                 tone = (k % 4);
                                 //计算当前声母在无音调声母的位置
                                 var pos = k / 4;
-                                py1.Append(vowels[pos]);
+                                wordBuilder.Append(vowels[pos]);
                             }
                             else
                             {
                                 //原样
-                                py1.Append(w);
+                                wordBuilder.Append(vowel);
                             }
                         }
                         //如果是带音调数字形式，则将音调添加到末尾
-                        py1.Append((options.PinyinEnum == PinyinEnum.ToneRightNum ? (tone + 1) + string.Empty : string.Empty));
+                        wordBuilder.Append((options.PinyinEnum == PinyinEnum.ToneRightNum ? (tone + 1) + string.Empty : string.Empty));
                     }
                     else
                     {
-                        py1.Append(py);
+                        wordBuilder.Append(wordPinyin);
                     }
                     if (options.CaseSensitive)
                     {
-                        string value = py1.ToString();
-                        py1.Clear();
-                        py1.Append(value.ToUpper());
+                        string value = wordBuilder.ToString();
+                        wordBuilder.Clear();
+                        wordBuilder.Append(value.ToUpper());
                     }
                     else if (options.FirstCapitalized)
                     {
-                        string value = py1.ToString();
-                        py1.Clear();
-                        py1.Append(Capitalize(value));
+                        string value = wordBuilder.ToString();
+                        wordBuilder.Clear();
+                        wordBuilder.Append(Capitalize(value));
+                    }
+                    if (options.Initials)
+                    {
+                        var initials = wordBuilder.ToString().First().ToString();
+                        wordBuilder.Clear();
+                        wordBuilder.Append(initials);
                     }
                     if (!isPrevAddSeparator)
                     {
                         pinyinBuilder.Append(options.Separator);
                     }
-                    pinyinBuilder.Append(py1).Append(options.Separator);
+                    pinyinBuilder.Append(wordBuilder).Append(options.Separator);
                     isPrevAddSeparator = true;
                 }
                 else
                 {
                     //如果不需要处理的非拼音
-                    pinyinBuilder.Append(py);
+                    pinyinBuilder.Append(wordPinyin);
                     isPrevAddSeparator = false;
                 }
 
@@ -187,10 +216,7 @@ namespace Chan.Pinyin
                 return py;
             }
         }
-        public static string Reverse(string pinyin)
-        {
-            return string.Empty;
-        }
+
         /// <summary>
         ///获取一个汉字的所有拼音
         /// </summary>
@@ -260,5 +286,23 @@ namespace Chan.Pinyin
             return null;
         }
 
+        private static string GetSimpleWord(char word)
+        {
+            string complexWord = word.ToString();
+            if (ComplexSet.Dictionary.ContainsKey(complexWord))
+            {
+                return ComplexSet.Dictionary[complexWord];
+            }
+            return complexWord;
+        }
+        private static string GetComplexWord(char word)
+        {
+            string simpleWord = word.ToString();
+            if (ComplexSet.Dictionary.ContainsValue(simpleWord))
+            {
+                return ComplexSet.Dictionary.First(s => s.Value == simpleWord).Key;
+            }
+            return simpleWord;
+        }
     }
 }

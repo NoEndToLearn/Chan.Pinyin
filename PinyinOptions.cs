@@ -59,6 +59,10 @@ namespace Chan.Pinyin
         /// </para>
         /// </summary>
         public string Separator { get; set; } = " ";
+        /// <summary>
+        /// 仅显示首字母
+        /// </summary>
+        public bool Initials { get; set; } = false;
     }
 
     public class PolysyllabicOptions

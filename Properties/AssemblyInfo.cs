@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("Chan.Pinyin")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("汉字转换拼音，转换为首字母拼音，支持拼音首字母大写等。")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("ch_lhp@163.com")]
 [assembly: AssemblyProduct("Chan.Pinyin")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]

@@ -1,0 +1,6 @@
+E:\GitHub\Chan.Pinyin\bin\Release\Chan.Pinyin.dll
+E:\GitHub\Chan.Pinyin\bin\Release\Chan.Pinyin.pdb
+E:\GitHub\Chan.Pinyin\obj\Release\Chan.Pinyin.csprojAssemblyReference.cache
+E:\GitHub\Chan.Pinyin\obj\Release\Chan.Pinyin.csproj.CoreCompileInputs.cache
+E:\GitHub\Chan.Pinyin\obj\Release\Chan.Pinyin.dll
+E:\GitHub\Chan.Pinyin\obj\Release\Chan.Pinyin.pdb
