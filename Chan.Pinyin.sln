@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chan.Pinyin", "Chan.Pinyin.csproj", "{A97BC52A-9BC6-4724-A34A-613BEED45CDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "..\ConsoleApp1\ConsoleApp1.csproj", "{2DFF8A04-A2D9-4828-A275-69D1B5ACB2A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A97BC52A-9BC6-4724-A34A-613BEED45CDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A97BC52A-9BC6-4724-A34A-613BEED45CDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A97BC52A-9BC6-4724-A34A-613BEED45CDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A97BC52A-9BC6-4724-A34A-613BEED45CDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DFF8A04-A2D9-4828-A275-69D1B5ACB2A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DFF8A04-A2D9-4828-A275-69D1B5ACB2A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DFF8A04-A2D9-4828-A275-69D1B5ACB2A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DFF8A04-A2D9-4828-A275-69D1B5ACB2A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {96389A50-D871-49DD-AEC8-72128775B80A}
+	EndGlobalSection
+EndGlobal
